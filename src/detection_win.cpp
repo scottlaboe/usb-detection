@@ -174,7 +174,7 @@ void LoadFunctions() {
 	}
 
 	if(!success) {
-		printf("Could not load library functions from dll -> abort (Check if %s is available)\r\n", LIBRARY_NAME);
+		printf("Could not load library functions from dll -> abort (Check if %s is available)\r\n", SETUPAPI_LIB);
 		exit(1);
 	}
 }
