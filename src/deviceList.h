@@ -6,7 +6,7 @@
 
 typedef struct {
 	public:
-		int locationId;
+		std::string locationId;
 		int vendorId;
 		int productId;
 		std::string deviceName;
