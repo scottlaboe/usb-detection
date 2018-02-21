@@ -23,8 +23,8 @@ using namespace std;
 #define VID_TAG "VID_"
 #define PID_TAG "PID_"
 
-#define LIBRARY_NAME ("setupapi.dll")
 
+#define SETUPAPI_LIB ("setupapi.dll")
 
 #define DllImport __declspec(dllimport)
 
@@ -148,7 +148,7 @@ void LoadFunctions() {
 
 	bool success;
 
-	hinstLib = LoadLibrary(LIBRARY_NAME);
+	hinstLib = LoadLibrary(SETUPAPI_LIB);
 
 	if (hinstLib != NULL) {
 		DllSetupDiEnumDeviceInfo = (_SetupDiEnumDeviceInfo) GetProcAddress(hinstLib, "SetupDiEnumDeviceInfo");
@@ -404,7 +404,7 @@ void ExtractDeviceInfo(HDEVINFO hDevInfo, SP_DEVINFO_DATA* pspDevInfoData, TCHAR
 	DWORD nSize;
 	static int dummy = 1;
 
-	resultItem->locationId = 0;
+	resultItem->locationId = "";
 	resultItem->deviceAddress = dummy++;
 
 	// device found
@@ -421,6 +421,10 @@ void ExtractDeviceInfo(HDEVINFO hDevInfo, SP_DEVINFO_DATA* pspDevInfoData, TCHAR
 	if (DllSetupDiGetDeviceRegistryProperty(hDevInfo, pspDevInfoData, SPDRP_HARDWAREID, &DataT, (PBYTE)buf, buffSize, &nSize)) {
 		// Use this to extract VID / PID
 		extractVidPid(buf, resultItem);
+	}
+	
+	if (DllSetupDiGetDeviceRegistryProperty(hDevInfo, pspDevInfoData, SPDRP_LOCATION_PATHS, &DataT, (PBYTE)buf, buffSize, &nSize)) {
+		resultItem->locationId = buf;
 	}
 }
 
