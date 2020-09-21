@@ -1,6 +1,8 @@
 #include "detection.h"
 #include "deviceList.h"
 
+#include <sstream>
+
 #include <CoreFoundation/CoreFoundation.h>
 
 #include <IOKit/IOKitLib.h>
@@ -247,6 +249,10 @@ static void DeviceAdded(void *refCon, io_iterator_t iterator) {
 			continue;
 		}
 		deviceItem->deviceParams.locationId = locationID;
+		std::stringstream devicePath;
+
+  		devicePath << std::hex << locationID;
+ 		deviceItem->deviceParams.locationPath = devicePath.str();
 
 
 		kr = (*deviceListItem->deviceInterface)->GetDeviceAddress(deviceListItem->deviceInterface, &addr);

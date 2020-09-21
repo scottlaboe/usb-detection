@@ -422,6 +422,7 @@ void ExtractDeviceInfo(HDEVINFO hDevInfo, SP_DEVINFO_DATA* pspDevInfoData, TCHAR
 
 	resultItem->locationId = 0;
 	resultItem->deviceAddress = dummy++;
+	resultItem->locationPath = "";
 
 	// device found
 	if (DllSetupDiGetDeviceRegistryProperty(hDevInfo, pspDevInfoData, SPDRP_FRIENDLYNAME, &DataT, (PBYTE)buf, buffSize, &nSize)) {
@@ -438,7 +439,9 @@ void ExtractDeviceInfo(HDEVINFO hDevInfo, SP_DEVINFO_DATA* pspDevInfoData, TCHAR
 		// Use this to extract VID / PID
 		extractVidPid(buf, resultItem);
 	}
-
+	if (DllSetupDiGetDeviceRegistryProperty(hDevInfo, pspDevInfoData, SPDRP_LOCATION_PATHS, &DataT, (PBYTE)buf, buffSize, &nSize)) {
+		resultItem->locationPath = buf;
+	}
 	// Extract Serial Number
 	//
 	// Format: <device-ID>\<instance-specific-ID>
