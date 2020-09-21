@@ -192,7 +192,7 @@ void EIO_AfterFind(uv_work_t* req) {
 			Nan::Set(item, Nan::New<v8::String>(OBJECT_ITEM_MANUFACTURER).ToLocalChecked(), Nan::New<v8::String>((*it)->manufacturer.c_str()).ToLocalChecked());
 			Nan::Set(item, Nan::New<v8::String>(OBJECT_ITEM_SERIAL_NUMBER).ToLocalChecked(), Nan::New<v8::String>((*it)->serialNumber.c_str()).ToLocalChecked());
 			Nan::Set(item, Nan::New<v8::String>(OBJECT_ITEM_DEVICE_ADDRESS).ToLocalChecked(), Nan::New<v8::Number>((*it)->deviceAddress));
-			Nan::Set(item, Nan::New<v8::String>(OBJECT_ITEM_LOCATION_PATH).ToLocalChecked(), Nan::New<v8::String>(it->locationPath.c_str()).ToLocalChecked());
+			Nan::Set(item, Nan::New<v8::String>(OBJECT_ITEM_LOCATION_PATH).ToLocalChecked(), Nan::New<v8::String>((*it)->locationPath.c_str()).ToLocalChecked());
 			Nan::Set(results, i, item);
 		}
 		argv[0] = Nan::Undefined();
